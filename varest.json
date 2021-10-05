@@ -1,0 +1,28 @@
+{
+  "UserInfo":[
+    {
+      "UserId": "0",
+      "FirstName": "Avi",
+      "SurName": "Barhano",
+      "Age": "37",
+      "LicenceDrive": "Yes",
+      "City": "TelAviv"
+    },
+    {
+      "UserId": "1",
+      "FirstName": "Sharon",
+      "SurName": "Nickoliz",
+      "Age": "44",
+      "LicenceDrive": "Yes",
+      "City": "Arad"
+    },
+    {
+      "UserId": "2",
+      "FirstName": "Danielle",
+      "SurName": "Shcwartz",
+      "Age": "36",
+      "LicenceDrive": "Yes",
+      "City": "Givataim"
+    }
+    ]
+}
