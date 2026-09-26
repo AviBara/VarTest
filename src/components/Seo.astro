@@ -1,0 +1,39 @@
+---
+import { site } from '../site';
+
+interface Props {
+  title: string;
+  description: string;
+  type?: 'website' | 'article';
+  updated?: Date;
+  jsonLd?: Record<string, unknown>;
+}
+const { title, description, type = 'website', updated, jsonLd } = Astro.props;
+// build.format is 'file', so pathname ends in .html; canonical must be the clean URL hosts serve.
+const cleanPath = Astro.url.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+const canonical = new URL(cleanPath, Astro.site).toString();
+const fullTitle = title === site.name ? `${site.name} · ${site.tagline}` : `${title} · ${site.name}`;
+
+const ld = jsonLd ?? {
+  '@context': 'https://schema.org',
+  '@type': type === 'article' ? 'Article' : 'WebSite',
+  name: fullTitle,
+  headline: title,
+  description,
+  url: canonical,
+  inLanguage: site.lang,
+  ...(updated ? { dateModified: updated.toISOString() } : {}),
+  publisher: { '@type': 'Organization', name: site.name, url: Astro.site?.toString() },
+};
+---
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content={site.lang === 'es' ? 'es_ES' : 'en_US'} />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />

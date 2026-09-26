@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../site';
+import { t } from '../i18n';
+const s = t(site.lang).notFound;
+---
+<Layout title={s.title} description={s.lead}>
+  <section class="hero"><div class="wrap">
+    <h1>404 · {s.title}</h1>
+    <p>{s.lead}</p>
+    <a class="btn primary" href="/">{s.back}</a>
+  </div></section>
+</Layout>

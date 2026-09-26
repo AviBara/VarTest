@@ -1,0 +1,19 @@
+---
+import { site, siteKey } from '../site';
+import { SITES } from '../sites.js';
+import { t } from '../i18n';
+const s = t(site.lang);
+const siblings = Object.values(SITES).filter((x) => x.key !== siteKey);
+---
+<footer class="footer">
+  <div class="wrap">
+    <div>© {new Date().getFullYear()} {site.name}. {s.footer.rights}</div>
+    <nav aria-label="Footer">
+      <a href="/about">{s.footer.about}</a>
+      <a href="/privacy">{s.footer.privacy}</a>
+      <a href="/affiliate-disclosure">{s.footer.disclosure}</a>
+      <a href={`mailto:${site.contactEmail}`}>{s.footer.contact}</a>
+      {siblings.map((x) => <a href={`https://${x.domain}`} rel="noopener">{x.name}</a>)}
+    </nav>
+  </div>
+</footer>

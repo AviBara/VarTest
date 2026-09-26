@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import AffiliateBox from '../components/AffiliateBox.astro';
+import { site } from '../site';
+import { t } from '../i18n';
+import { siteEntries, pathFor, formatDate } from '../lib/content';
+
+const s = t(site.lang);
+const destinations = await siteEntries('destinations');
+const guides = await siteEntries('guides');
+const featured = [...destinations.filter((d) => d.data.featured), ...destinations.filter((d) => !d.data.featured)].slice(0, 6);
+---
+<Layout title={site.name} description={site.description}>
+  <section class="hero">
+    <div class="wrap">
+      <h1>{s.home.heroTitle(site.continent)}</h1>
+      <p>{s.home.heroLead}</p>
+      <a class="btn primary" href={`/${site.routes.destinations}`}>{s.home.ctaDestinations}</a>
+      <a class="btn ghost" href={`/${site.routes.guides}`}>{s.home.ctaGuides}</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>{s.home.featuredDestinations}</h2>
+        <a href={`/${site.routes.destinations}`}>{s.home.allDestinations} →</a>
+      </div>
+      <div class="grid">
+        {featured.map((d) => (
+          <Card
+            href={pathFor('destinations', d)}
+            title={d.data.title}
+            description={d.data.description}
+            tag={d.data.country}
+            meta={d.data.budgetPerDay ? `${s.destinations.budgetLabel}: ${d.data.budgetPerDay}` : undefined}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>{s.home.latestGuides}</h2>
+        <a href={`/${site.routes.guides}`}>{s.home.allGuides} →</a>
+      </div>
+      <div class="grid">
+        {guides.slice(0, 6).map((g) => (
+          <Card
+            href={pathFor('guides', g)}
+            title={g.data.title}
+            description={g.data.description}
+            tag={g.data.category}
+            meta={`${s.guides.updated}: ${formatDate(g.data.updated, site.lang)}`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap"><AffiliateBox inline /></div>
+  </section>
+</Layout>

@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../site';
+const es = site.lang === 'es';
+const title = es ? 'Enlaces de afiliado' : 'Affiliate disclosure';
+const desc = es ? 'Cómo usamos enlaces de afiliado y qué significa para ti.' : 'How we use affiliate links and what it means for you.';
+---
+<Layout title={title} description={desc}>
+  <section class="section"><div class="wrap prose" style="max-width: 720px">
+    <h1>{title}</h1>
+    {es ? (
+      <>
+        <p>{site.name} incluye enlaces a servicios de terceros (Booking.com, Airalo, SafetyWing y otros). Si reservas o compras a través de esos enlaces, podemos recibir una comisión. El precio para ti es el mismo.</p>
+        <p>Recomendamos únicamente servicios que usaríamos nosotros. Las comisiones no influyen en qué destinos cubrimos ni en cómo los valoramos.</p>
+        <p>Los enlaces de afiliado están marcados con <code>rel="sponsored"</code> y se abren en una pestaña nueva.</p>
+      </>
+    ) : (
+      <>
+        <p>{site.name} includes links to third-party services (Booking.com, Airalo, SafetyWing and others). If you book or buy through those links we may earn a commission. The price for you is the same.</p>
+        <p>We only recommend services we would use ourselves. Commissions do not influence which destinations we cover or how we rate them.</p>
+        <p>Affiliate links are marked with <code>rel="sponsored"</code> and open in a new tab.</p>
+      </>
+    )}
+  </div></section>
+</Layout>

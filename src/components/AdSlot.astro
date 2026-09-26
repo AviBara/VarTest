@@ -1,0 +1,7 @@
+---
+// Placeholder for an ad network unit (AdSense, Ezoic, Mediavine). Stays empty until
+// the network script is added to Layout.astro, so it never affects layout before then.
+interface Props { id: string }
+const { id } = Astro.props;
+---
+<div class="ad-slot" data-ad-slot={id}></div>

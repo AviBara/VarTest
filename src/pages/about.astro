@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../site';
+const es = site.lang === 'es';
+const title = es ? 'Sobre nosotros' : 'About';
+const desc = es
+  ? `Qué es ${site.name}, quién lo escribe y cómo se financia.`
+  : `What ${site.name} is, who writes it and how it is funded.`;
+---
+<Layout title={title} description={desc}>
+  <section class="section"><div class="wrap prose" style="max-width: 720px">
+    <h1>{title}</h1>
+    {es ? (
+      <>
+        <p><strong>{site.name}</strong> es una guía independiente para viajar, trabajar y vivir en {site.continent}. Publicamos información práctica y verificable: presupuestos reales, conectividad, seguros, visados y seguridad.</p>
+        <p>Cada artículo tiene fecha de actualización. Si algo cambió y no lo reflejamos, escríbenos a <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.</p>
+        <h2>Cómo se financia</h2>
+        <p>Con enlaces de afiliado (alojamiento, eSIM, seguros) y, más adelante, publicidad. Nunca cobramos por incluir o valorar un destino. Más detalles en <a href="/affiliate-disclosure">la página de afiliados</a>.</p>
+        <h2>Red de sitios</h2>
+        <p>{site.name} forma parte de la red <em>.uno</em> junto a <a href="https://europe.uno">Europe Uno</a> y <a href="https://africa.uno">Africa Uno</a>.</p>
+      </>
+    ) : (
+      <>
+        <p><strong>{site.name}</strong> is an independent guide to travelling, working and living in {site.continent}. We publish practical, checkable information: real budgets, connectivity, insurance, visas and safety.</p>
+        <p>Every article shows its last update date. If something changed and we missed it, write to <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.</p>
+        <h2>How it is funded</h2>
+        <p>Through affiliate links (accommodation, eSIM, insurance) and, later, advertising. We never charge to include or rate a destination. Details on the <a href="/affiliate-disclosure">affiliate page</a>.</p>
+        <h2>Network</h2>
+        <p>{site.name} is part of the <em>.uno</em> network together with <a href="https://america.uno">América Uno</a>, <a href="https://europe.uno">Europe Uno</a> and <a href="https://africa.uno">Africa Uno</a>.</p>
+      </>
+    )}
+  </div></section>
+</Layout>

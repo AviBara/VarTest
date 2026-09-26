@@ -1,0 +1,60 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import AffiliateBox from '../../components/AffiliateBox.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { site } from '../../site';
+import { t } from '../../i18n';
+import { siteEntries, slugOf, readingMinutes, formatDate } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const d = await siteEntries('destinations');
+  const g = await siteEntries('guides');
+  return [
+    ...d.map((entry) => ({ params: { section: site.routes.destinations, slug: slugOf(entry) }, props: { entry, kind: 'destinations' } })),
+    ...g.map((entry) => ({ params: { section: site.routes.guides, slug: slugOf(entry) }, props: { entry, kind: 'guides' } })),
+  ];
+}
+
+const { entry, kind } = Astro.props;
+const { Content } = await render(entry);
+const s = t(site.lang);
+const data = entry.data as Record<string, any>;
+const isDestination = kind === 'destinations';
+const facts = isDestination
+  ? [
+      [s.destinations.budgetLabel, data.budgetPerDay],
+      [s.destinations.bestTime, data.bestTime],
+      [s.destinations.currency, data.currency],
+      [s.destinations.language, data.language],
+      [s.destinations.visa, data.visa],
+    ].filter(([, v]) => v)
+  : [];
+---
+<Layout title={data.title} description={data.description} type="article" updated={data.updated}>
+  <article class="article">
+    <div class="wrap article-grid">
+      <div>
+        <header>
+          <div class="breadcrumb">
+            <a href="/">{s.breadcrumbHome}</a> / <a href={`/${site.routes[kind]}`}>{s[kind].title}</a>
+          </div>
+          <h1>{data.title}</h1>
+          <p class="sub">{data.description}</p>
+          <div class="meta">
+            {s.guides.updated}: {formatDate(data.updated, site.lang)} · {readingMinutes(entry.body)} {s.guides.readingTime}
+          </div>
+        </header>
+        {facts.length > 0 && (
+          <div class="facts">
+            {facts.map(([k, v]) => (<div class="fact"><b>{k}</b>{v}</div>))}
+          </div>
+        )}
+        <AdSlot id="top" />
+        <div class="prose"><Content /></div>
+        <AdSlot id="bottom" />
+      </div>
+      <AffiliateBox query={isDestination ? data.bookingQuery ?? data.title : undefined} />
+    </div>
+  </article>
+</Layout>
