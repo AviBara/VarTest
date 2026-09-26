@@ -1,0 +1,16 @@
+---
+import { site } from '../site';
+import { t } from '../i18n';
+const s = t(site.lang);
+const [first, ...rest] = site.name.split(' ');
+---
+<header class="header">
+  <div class="wrap">
+    <a class="brand" href="/">{first} <span>{rest.join(' ')}</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href={`/${site.routes.destinations}`}>{s.nav.destinations}</a>
+      <a href={`/${site.routes.guides}`}>{s.nav.guides}</a>
+      <a href="/about">{s.nav.about}</a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import { site } from '../../site';
+import { t } from '../../i18n';
+import { siteEntries, pathFor, formatDate } from '../../lib/content';
+
+export function getStaticPaths() {
+  return [
+    { params: { section: site.routes.destinations }, props: { kind: 'destinations' } },
+    { params: { section: site.routes.guides }, props: { kind: 'guides' } },
+  ];
+}
+const { kind } = Astro.props as { kind: 'destinations' | 'guides' };
+const s = t(site.lang);
+const copy = s[kind];
+const entries = await siteEntries(kind);
+---
+<Layout title={copy.title} description={copy.lead}>
+  <section class="section">
+    <div class="wrap">
+      <h1>{copy.title}</h1>
+      <p class="lead">{copy.lead}</p>
+      <div class="grid">
+        {entries.map((e) => (
+          <Card
+            href={pathFor(kind, e)}
+            title={e.data.title}
+            description={e.data.description}
+            tag={'country' in e.data ? e.data.country : e.data.category}
+            meta={`${s.guides.updated}: ${formatDate(e.data.updated, site.lang)}`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

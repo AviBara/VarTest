@@ -1,0 +1,23 @@
+---
+import { site } from '../site';
+import { t } from '../i18n';
+import { bookingUrl, esimUrl, insuranceUrl } from '../lib/affiliates';
+
+interface Props { query?: string; inline?: boolean }
+const { query, inline = false } = Astro.props;
+const s = t(site.lang).affiliate;
+const rel = 'nofollow sponsored noopener';
+---
+<aside class:list={['aff', { inline }]} aria-label={s.title}>
+  <h3>{s.title}</h3>
+  <a class="item" href={bookingUrl(query)} rel={rel} target="_blank">
+    <strong>{s.booking}</strong><span>{s.bookingDesc}</span>
+  </a>
+  <a class="item" href={esimUrl()} rel={rel} target="_blank">
+    <strong>{s.esim}</strong><span>{s.esimDesc}</span>
+  </a>
+  <a class="item" href={insuranceUrl()} rel={rel} target="_blank">
+    <strong>{s.insurance}</strong><span>{s.insuranceDesc}</span>
+  </a>
+  <p class="note">{s.disclosure}</p>
+</aside>

@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+import Seo from '../components/Seo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../site';
+
+interface Props {
+  title: string;
+  description: string;
+  type?: 'website' | 'article';
+  updated?: Date;
+}
+const { title, description, type, updated } = Astro.props;
+---
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <Seo title={title} description={description} type={type} updated={updated} />
+    {/* html:root outranks the :root defaults in global.css, whichever loads last */}
+    <style is:inline set:html={`html:root{--accent:${site.accent};--accent-soft:${site.accentSoft}}@media (prefers-color-scheme: dark){html:root{--accent-soft:${site.accentSoftDark}}}`}></style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

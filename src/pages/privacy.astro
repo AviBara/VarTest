@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../site';
+const es = site.lang === 'es';
+const title = es ? 'Política de privacidad' : 'Privacy policy';
+const desc = es ? 'Qué datos recogemos y cómo los usamos.' : 'What data we collect and how we use it.';
+---
+<Layout title={title} description={desc}>
+  <section class="section"><div class="wrap prose" style="max-width: 720px">
+    <h1>{title}</h1>
+    {es ? (
+      <>
+        <p>{site.name} es un sitio estático. No pedimos registro ni almacenamos datos personales en nuestros servidores.</p>
+        <h2>Analítica</h2>
+        <p>Podemos usar una herramienta de analítica sin cookies para medir visitas de forma agregada (páginas vistas, país, dispositivo). No identificamos a personas.</p>
+        <h2>Publicidad y afiliados</h2>
+        <p>Si en el futuro mostramos anuncios, el proveedor (por ejemplo Google AdSense) puede usar cookies para personalizarlos. Podrás gestionar tu consentimiento desde el aviso correspondiente. Los enlaces de afiliado llevan un identificador que permite al comercio atribuirnos la venta; no nos transmiten tus datos personales.</p>
+        <h2>Contacto</h2>
+        <p>Preguntas sobre privacidad: <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.</p>
+      </>
+    ) : (
+      <>
+        <p>{site.name} is a static website. We do not require sign-up and do not store personal data on our servers.</p>
+        <h2>Analytics</h2>
+        <p>We may use a cookie-free analytics tool to measure visits in aggregate (page views, country, device). We do not identify individuals.</p>
+        <h2>Advertising and affiliates</h2>
+        <p>If we show ads in the future, the provider (for example Google AdSense) may use cookies to personalise them. You will be able to manage consent through the corresponding notice. Affiliate links carry an identifier that lets the merchant attribute the sale to us; they do not pass us your personal data.</p>
+        <h2>Contact</h2>
+        <p>Privacy questions: <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.</p>
+      </>
+    )}
+  </div></section>
+</Layout>
